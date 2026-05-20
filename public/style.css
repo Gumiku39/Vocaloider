@@ -1,16 +1,256 @@
-/* --- 你原有的全局极简设定 --- */
+/* --- 基础布局设定 --- */
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: #ffffff;
     margin: 0;
-    padding: 40px 20px;
+    padding: 0;
     color: #1a1a1a;
     letter-spacing: 0.5px;
+    display: flex;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 70px;
+    padding: 40px 20px;
+    transition: margin-left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* --- 侧边导航栏 --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 240px;
+    background: #fdfdfd;
+    border-right: 1px solid #eee;
+    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow: hidden;
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+}
+
+    .sidebar.collapsed {
+        width: 70px;
+    }
+
+    .sidebar:not(.collapsed) ~ .main-content {
+        margin-left: 240px;
+    }
+
+.sidebar-header {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #1a1a1a;
+    transition: transform 0.2s;
+}
+
+    .toggle-btn:hover {
+        transform: scale(1.1);
+    }
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .nav-links li {
+        padding: 0 10px;
+    }
+
+    .nav-links a {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        text-decoration: none;
+        color: #666;
+        border-radius: 8px;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+        .nav-links a:hover, .nav-links li.active a {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+    .nav-links .icon {
+        min-width: 30px;
+        font-size: 1.2em;
+        text-align: center;
+        margin-right: 15px;
+    }
+
+    .nav-links .text {
+        transition: opacity 0.3s;
+    }
+
+.sidebar.collapsed .nav-links .text {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- 首页欢迎页视图 --- */
+.view-section {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    animation: fadeUp 0.6s ease forwards;
+}
+
+#homeView {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background-image: url('welcome-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+#particleCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+.welcome-content {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    max-width: 500px;
+}
+
+.welcome-title {
+    font-family: 'Georgia', serif;
+    font-size: 2.2em;
+    margin: 0 0 15px 0;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.rolling-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.rolling-text {
+    font-size: 1.1em;
+    opacity: 0.9;
+    min-height: 24px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    transition: opacity 0.5s ease;
+}
+
+.icon-pencil {
+    cursor: pointer;
+    font-size: 1.2em;
+    opacity: 0.6;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+    .icon-pencil:hover {
+        opacity: 1;
+        transform: scale(1.2) rotate(15deg);
+    }
+
+.btn-enter {
+    background: rgba(255, 255, 255, 0.9);
+    color: #1a1a1a;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+    .btn-enter:hover {
+        background: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+.community-stats {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    z-index: 10;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85em;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* --- 歌曲推荐板块与检索框 --- */
+#recommendView {
+    /* 动态极浅渐变底色 */
+    background: linear-gradient(-45deg, #f8fbfb, #fdf6f7, #f6f9f4, #ffffff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    /* 科技感微缩波点纹理 */
+    background-image: radial-gradient(rgba(0, 0, 0, 0.04) 2px, transparent 2px), linear-gradient(-45deg, #f8fbfb, #fdf6f7, #f6f9f4, #ffffff);
+    background-size: 30px 30px, 400% 400%;
+    position: relative;
+    padding: 40px;
+    padding-bottom: 80px;
+    border-radius: 16px;
+    box-sizing: border-box;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .header {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     animation: fadeUp 1s ease forwards;
     opacity: 0;
 }
@@ -30,26 +270,76 @@ body {
         letter-spacing: 3px;
     }
 
+.filter-container {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeUp 1s ease 0.2s forwards;
+    opacity: 0;
+}
+
+.filter-input {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 30px;
+    padding: 12px 24px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+/* --- 核心升级：自适应网格瀑布流 --- */
 .music-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 40px;
-    max-width: 1100px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 35px;
+    max-width: 1200px;
     margin: 0 auto;
+    align-items: start; /* 保持卡片自身高度，顶部对齐 */
 }
 
 .card {
-    background: #fff;
+    /* 毛玻璃卡片质感 */
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     opacity: 0;
-    border: 1px solid transparent;
-    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s, border-color 0.4s;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
 }
 
     .card:hover {
-        transform: translateY(-10px);
-        border-color: #f0f0f0;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        border-color: rgba(255, 255, 255, 1);
+        background: rgba(255, 255, 255, 0.95);
     }
+
+/* 高光特效适配毛玻璃 */
+.highlight-glow {
+    animation: glowEffect 2.5s ease-out forwards;
+}
+
+@keyframes glowEffect {
+    0% {
+        box-shadow: 0 0 40px rgba(255, 51, 102, 0.4);
+        border-color: #ff3366;
+        transform: scale(1.02);
+    }
+
+    100% {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: scale(1);
+    }
+}
 
 .cover-wrapper {
     overflow: hidden;
@@ -58,10 +348,10 @@ body {
 
 .cover-img {
     width: 100%;
-    height: 240px;
     object-fit: cover;
     filter: grayscale(100%);
     transition: filter 0.6s ease, transform 0.6s ease;
+    display: block;
 }
 
 .card:hover .cover-img {
@@ -70,7 +360,7 @@ body {
 }
 
 .card-content {
-    padding: 25px 15px 15px 15px;
+    padding: 25px 20px;
 }
 
 .tag {
@@ -133,12 +423,16 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: color 0.3s, transform 0.3s;
+    transition: color 0.3s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
     .btn-like:hover {
         color: #ff3366;
         transform: scale(1.1);
+    }
+
+    .btn-like.liked {
+        color: #ff3366;
     }
 
 @keyframes fadeUp {
@@ -153,10 +447,10 @@ body {
     }
 }
 
-/* --- 新增：交互弹窗与表单样式 --- */
+/* --- 弹窗与表单 --- */
 .btn-add {
     background: transparent;
-    border: 1px solid #ddd;
+    border: 1px solid #1a1a1a;
     padding: 10px 24px;
     border-radius: 30px;
     font-size: 0.9em;
@@ -167,7 +461,6 @@ body {
 }
 
     .btn-add:hover {
-        border-color: #1a1a1a;
         background: #1a1a1a;
         color: #fff;
     }

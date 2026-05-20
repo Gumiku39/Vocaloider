@@ -10,7 +10,7 @@ app.use(express.json());
 // 托管 public 文件夹里的前端代码
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 连接本地 SQLite 数据库 (自动生成 database.db)
+// 连接本地 SQLite 数据库
 const db = new sqlite3.Database('./database.db', (err) => {
     if (err) console.error('数据库连接失败:', err.message);
     else console.log('已连接到了本地数据库YY');
@@ -49,8 +49,18 @@ app.post('/api/songs', (req, res) => {
     db.run(`INSERT INTO songs (title, artist, cover, tag, message, recommender) VALUES (?, ?, ?, ?, ?, ?)`,
         [title, artist, cover, tag, message, recommender], function (err) {
             if (err) return res.status(500).json({ error: err.message });
+            // 返回这首歌在数据库中生成的专属 ID，便于前端做高亮特效
             res.json({ message: '推荐成功', songId: this.lastID });
         });
+});
+
+// 新增：点赞接口
+app.post('/api/songs/:id/like', (req, res) => {
+    const songId = req.params.id;
+    db.run(`UPDATE songs SET likes = likes + 1 WHERE id = ?`, [songId], function (err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: '点赞成功' });
+    });
 });
 
 const PORT = 3000;

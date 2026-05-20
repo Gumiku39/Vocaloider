@@ -8,14 +8,63 @@
 </head>
 <body>
 
-    <div class="header">
-        <h1 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: bold;">火鸟虚拟歌姬文化研究会</h1>
-        <p>歌曲分享站</p>
+    <nav id="sidebar" class="sidebar collapsed">
+        <div class="sidebar-header">
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        </div>
+        <ul class="nav-links">
+            <li class="active">
+                <a href="#" onclick="switchTab('home')">
+                    <span class="icon">🏠</span>
+                    <span class="text">首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="switchTab('recommend')">
+                    <span class="icon">🎵</span>
+                    <span class="text">歌曲推荐</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="switchTab('news')">
+                    <span class="icon">📰</span>
+                    <span class="text">资讯分享</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
-        <button class="btn-add" onclick="openModal()">+ 推荐一首歌</button>
-    </div>
+    <div id="mainContent" class="main-content">
 
-    <div class="music-grid" id="musicGrid">
+        <div id="homeView" class="view-section">
+            <canvas id="particleCanvas"></canvas>
+            <div class="welcome-content">
+                <h1 class="welcome-title">火鸟虚拟歌姬文化研究会</h1>
+                <div class="rolling-wrapper">
+                    <span id="rollingText" class="rolling-text">正在连结共鸣...</span>
+                    <span class="icon-pencil" title="投稿文案" onclick="alert('文案投稿功能（连通数据库）即将开放，敬请期待！')">✏️</span>
+                </div>
+                <button class="btn-enter" onclick="switchTab('recommend')">进入空间</button>
+            </div>
+            <div class="community-stats" id="communityStats">
+                当前已收录 0 段共鸣 | 0 位 Vocaloider 已加入
+            </div>
+        </div>
+
+        <div id="recommendView" class="view-section" style="display: none;">
+            <div class="header">
+                <h1 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: bold;">共鸣瀑布流</h1>
+                <p>分享与发现</p>
+                <button class="btn-add" onclick="openModal()">+ 推荐一首歌</button>
+            </div>
+
+            <div class="filter-container">
+                <input type="text" id="localSearchInput" class="minimal-input filter-input" placeholder="🔍 检索歌名、歌手、标签或 上传者" oninput="filterSongs()">
+            </div>
+
+            <div class="music-grid" id="musicGrid">
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="addModal">
@@ -30,7 +79,6 @@
 
             <div id="step2" style="display: none;">
                 <div id="selectedSongPreview" class="selected-preview"></div>
-
                 <p style="font-size: 0.9em; color: #666; margin-top: 20px;">选择情绪标签：</p>
                 <div class="emoji-picker" id="emojiPicker">
                     <span class="emoji-btn active" onclick="selectEmoji(this, '🎵 治愈')">🎵 治愈</span>
@@ -39,10 +87,8 @@
                     <span class="emoji-btn" onclick="selectEmoji(this, '🎸 躁动')">🎸 躁动</span>
                     <span class="emoji-btn" onclick="selectEmoji(this, '🌙 深夜')">🌙 深夜</span>
                 </div>
-
-                <input type="text" id="recommenderInput" class="minimal-input" placeholder="你的名字..." style="margin-top: 15px;">
-                <textarea id="messageInput" class="minimal-input" placeholder="写下你的推荐语..." rows="3" style="margin-top: 15px; resize: none;"></textarea>
-
+                <input type="text" id="recommenderInput" class="minimal-input" placeholder="你的昵称：" style="margin-top: 15px;">
+                <textarea id="messageInput" class="minimal-input" placeholder="想说点什么吗：" rows="3" style="margin-top: 15px; resize: none;"></textarea>
                 <button class="btn-submit" onclick="submitSong()">发布推荐</button>
             </div>
         </div>
