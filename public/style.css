@@ -1,0 +1,314 @@
+/* --- 你原有的全局极简设定 --- */
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 40px 20px;
+    color: #1a1a1a;
+    letter-spacing: 0.5px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 60px;
+    animation: fadeUp 1s ease forwards;
+    opacity: 0;
+}
+
+    .header h1 {
+        font-family: 'Georgia', serif;
+        font-size: 2.5em;
+        font-weight: normal;
+        margin: 0 0 10px 0;
+        letter-spacing: 2px;
+    }
+
+    .header p {
+        color: #888;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+    }
+
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.card {
+    background: #fff;
+    opacity: 0;
+    border: 1px solid transparent;
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+    .card:hover {
+        transform: translateY(-10px);
+        border-color: #f0f0f0;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+    }
+
+.cover-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.cover-img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.6s ease, transform 0.6s ease;
+}
+
+.card:hover .cover-img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 25px 15px 15px 15px;
+}
+
+.tag {
+    font-size: 0.7em;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.song-title {
+    font-family: 'Georgia', serif;
+    font-size: 1.4em;
+    margin: 0 0 8px 0;
+    font-weight: normal;
+}
+
+.artist {
+    color: #555;
+    font-size: 0.9em;
+    margin: 0 0 20px 0;
+}
+
+.message {
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+    .message::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 1px;
+        background-color: #1a1a1a;
+        margin-bottom: 10px;
+    }
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recommender {
+    font-size: 0.8em;
+    color: #aaa;
+    font-style: italic;
+}
+
+.btn-like {
+    background: none;
+    border: none;
+    color: #1a1a1a;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s, transform 0.3s;
+}
+
+    .btn-like:hover {
+        color: #ff3366;
+        transform: scale(1.1);
+    }
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 新增：交互弹窗与表单样式 --- */
+.btn-add {
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    margin-top: 15px;
+}
+
+    .btn-add:hover {
+        border-color: #1a1a1a;
+        background: #1a1a1a;
+        color: #fff;
+    }
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 40px;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s;
+}
+
+    .close-btn:hover {
+        color: #1a1a1a;
+    }
+
+.minimal-input {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.3s;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+    .minimal-input:focus {
+        border-bottom-color: #1a1a1a;
+    }
+
+.search-results {
+    margin-top: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.search-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+    .search-item:hover {
+        background: #f9f9f9;
+    }
+
+    .search-item img {
+        width: 45px;
+        height: 45px;
+        border-radius: 4px;
+        object-fit: cover;
+    }
+
+.selected-preview {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+    .selected-preview img {
+        width: 60px;
+        height: 60px;
+        border-radius: 6px;
+        object-fit: cover;
+    }
+
+.emoji-picker {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.emoji-btn {
+    padding: 6px 12px;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    font-size: 0.85em;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s;
+}
+
+    .emoji-btn.active, .emoji-btn:hover {
+        border-color: #1a1a1a;
+        background: #1a1a1a;
+        color: #fff;
+    }
+
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 25px;
+    transition: background 0.3s;
+}
+
+    .btn-submit:hover {
+        background: #333;
+    }

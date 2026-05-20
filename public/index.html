@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火鸟虚拟歌姬文化研究会歌曲分享站</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="header">
+        <h1 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: bold;">火鸟虚拟歌姬文化研究会</h1>
+        <p>歌曲分享站</p>
+
+        <button class="btn-add" onclick="openModal()">+ 推荐一首歌</button>
+    </div>
+
+    <div class="music-grid" id="musicGrid">
+    </div>
+
+    <div class="modal-overlay" id="addModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: bold; margin-top: 0;">分享你的共鸣</h2>
+
+            <div id="step1">
+                <input type="text" id="searchInput" class="minimal-input" placeholder="输入歌名或歌手，按回车搜索..." onkeydown="if(event.key==='Enter') searchMusic()">
+                <div id="searchResults" class="search-results"></div>
+            </div>
+
+            <div id="step2" style="display: none;">
+                <div id="selectedSongPreview" class="selected-preview"></div>
+
+                <p style="font-size: 0.9em; color: #666; margin-top: 20px;">选择情绪标签：</p>
+                <div class="emoji-picker" id="emojiPicker">
+                    <span class="emoji-btn active" onclick="selectEmoji(this, '🎵 治愈')">🎵 治愈</span>
+                    <span class="emoji-btn" onclick="selectEmoji(this, '🌧️ 阴雨')">🌧️ 阴雨</span>
+                    <span class="emoji-btn" onclick="selectEmoji(this, '☕ 午后')">☕ 午后</span>
+                    <span class="emoji-btn" onclick="selectEmoji(this, '🎸 躁动')">🎸 躁动</span>
+                    <span class="emoji-btn" onclick="selectEmoji(this, '🌙 深夜')">🌙 深夜</span>
+                </div>
+
+                <input type="text" id="recommenderInput" class="minimal-input" placeholder="你的名字..." style="margin-top: 15px;">
+                <textarea id="messageInput" class="minimal-input" placeholder="写下你的推荐语..." rows="3" style="margin-top: 15px; resize: none;"></textarea>
+
+                <button class="btn-submit" onclick="submitSong()">发布推荐</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
